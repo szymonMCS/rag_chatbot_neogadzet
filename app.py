@@ -10,7 +10,10 @@ def format_context(context_docs):
 
 def chat(history):
     last_message = history[-1]["content"]
-    if isinstance(last_message, list):
+    # Gradio może zwracać różne formaty: string, lista, lub słownik {'text': ..., 'type': ...}
+    if isinstance(last_message, dict):
+        last_message = last_message.get("text", "")
+    elif isinstance(last_message, list):
         last_message = " ".join(str(x) for x in last_message)
     prior = history[:-1]
     answer, context = answer_question(last_message, prior)
