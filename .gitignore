@@ -17,6 +17,7 @@ vector_db/
 preprocessed_db/
 *.db
 *.sqlite
+gpt-4.1-nano/
 
 # IDE
 .vscode/
