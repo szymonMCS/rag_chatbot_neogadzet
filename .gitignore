@@ -1,1 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+env/
+venv/
+
+# Klucze i zmienne środowiskowe
 .env
+.env.local
+
+# Bazy wektorowe (generowane automatycznie)
+vector_db/
+preprocessed_db/
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Systemy operacyjne
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Logi
+*.log

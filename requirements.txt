@@ -1,0 +1,62 @@
+# ==================== PODSTAWOWE BIBLIOTEKI ====================
+# OpenAI i modele językowe
+openai>=1.0.0
+
+# LangChain - framework RAG
+langchain>=0.3.0
+langchain-openai>=0.2.0
+langchain-chroma>=0.1.0
+langchain-community>=0.3.0
+langchain-text-splitters>=0.3.0
+
+# Baza wektorowa
+chromadb>=0.5.0
+
+# ==================== INTERFEJS UŻYTKOWNIKA ====================
+# Web UI
+gradio>=5.0.0
+
+# ==================== NARZĘDZIA POMOCNICZE ====================
+# Zmienne środowiskowe
+python-dotenv>=1.0.0
+
+# Tokenizacja (liczenie tokenów)
+tiktoken>=0.8.0
+
+# Parsowanie i walidacja danych
+pydantic>=2.0.0
+
+# Pasek postępu
+tqdm>=4.66.0
+
+# Retry logic
+tenacity>=9.0.0
+
+# Multiprocessing (przyspieszenie processingu)
+multiprocessing-utils>=0.4.0
+
+# ==================== ALTERNATYWNE EMBEDDINGI ====================
+# Lokalne modele embeddingów (tańsze niż OpenAI)
+langchain-huggingface>=0.1.0
+sentence-transformers>=3.0.0
+
+# Obsługa modeli przez LiteLLM (opcjonalnie - więcej providerów)
+litellm>=1.0.0
+
+# ==================== EWALUACJA I WIZUALIZACJA ====================
+# Analiza danych
+pandas>=2.0.0
+numpy>=1.26.0
+
+# Wizualizacje
+plotly>=5.0.0
+
+# Redukcja wymiarowości (t-SNE dla wizualizacji wektorów)
+scikit-learn>=1.5.0
+
+# ==================== DODATKOWE LOADERY DOKUMENTÓW ====================
+# Obsługa różnych formatów plików
+unstructured>=0.15.0          # Dla PDF, DOCX, etc.
+markdown>=3.7.0               # Lepsza obsługa MD
+beautifulsoup4>=4.12.0        # Dla HTML
+pypdf>=5.0.0                  # Dla PDF
