@@ -11,12 +11,11 @@ from tenacity import retry, wait_exponential, stop_after_attempt
 
 load_dotenv(override=True)
 
-# Konfiguracja logowania
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 MODEL = "openai/gpt-4.1-nano"
-DB_NAME = "gpt-4.1-nano"
+DB_NAME = "vector_db"
 KNOWLEDGE_BASE_PATH = "knowledge-base/sections"
 SUMMARIES_PATH = Path(__file__).parent.parent / "summaries"
 
