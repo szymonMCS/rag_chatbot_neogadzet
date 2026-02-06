@@ -28,6 +28,7 @@ gpt-4.1-nano/
 # Systemy operacyjne
 .DS_Store
 Thumbs.db
+.gradio
 
 # Jupyter
 .ipynb_checkpoints/

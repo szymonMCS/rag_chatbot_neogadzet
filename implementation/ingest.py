@@ -14,8 +14,8 @@ load_dotenv(override=True)
 MODEL = "openai/gpt-4.1-nano"
 collection_name = "docs"
 embedding_model = "text-embedding-3-large"
-DB_NAME = "gpt-4.1-nano"
-KNOWLEDGE_BASE_PATH = "knowledge-base/sections"
+DB_NAME = "vector_db"
+KNOWLEDGE_BASE_PATH = Path(__file__).parent.parent / "knowledge-base" / "sections"
 AVERAGE_CHUNK_SIZE = 100
 wait = wait_exponential(multiplier=1, min=10, max=240)
 
@@ -47,11 +47,10 @@ class Chunks(BaseModel):
 def fetch_documents():
     documents = []
 
-    for folder in KNOWLEDGE_BASE_PATH.iterdir():
-        doc_type = folder.name
-        for file in folder.rglob("*.md"):
-            with open(file, "r", encoding="utf-8") as f:
-                documents.append({"type": doc_type, "source": file.as_posix(), "text": f.read()})
+    for file in KNOWLEDGE_BASE_PATH.rglob("*.md"):
+        doc_type = file.parent.name
+        with open(file, "r", encoding="utf-8") as f:
+            documents.append({"type": doc_type, "source": file.as_posix(), "text": f.read()})
 
     print(f"Loaded {len(documents)} documents")
     return documents
