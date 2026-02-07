@@ -18,12 +18,11 @@ MODEL = "openai/gpt-4.1-nano"
 DB_NAME = "vector_db"
 KNOWLEDGE_BASE_PATH = "knowledge-base/sections"
 SUMMARIES_PATH = Path(__file__).parent.parent / "summaries"
-
 collection_name = "docs"
 embedding_model = "text-embedding-3-large"
+
 wait = wait_exponential(multiplier=1, min=1, max=10)
 stop = stop_after_attempt(3)
-
 openai = OpenAI()
 
 chroma = PersistentClient(path=DB_NAME)
@@ -67,16 +66,21 @@ Odpowiadaj tylko za pomocą listy uszeregowanych identyfikatorów fragmentów i 
 """
     user_prompt = f"Użytkownik zadał następujące pytanie:\n\n{question}\n\nOUporządkuj wszystkie fragmenty tekstu według ich istotności dla pytania, od najbardziej do najmniej istotnego. Uwzględnij wszystkie podane identyfikatory fragmentów, ponownie uporządkowane.\n\n"
     user_prompt += "Oto kawałki:\n\n"
+
     for index, chunk in enumerate(chunks):
         user_prompt += f"# CHUNK ID: {index + 1}:\n\n{chunk.page_content}\n\n"
+
     user_prompt += "Odpowiedz tylko listą identyfikatorów uporządkowanych fragmentów, niczym więcej."
+
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt},
     ]
+
     response = completion(model=MODEL, messages=messages, response_format=RankOrder, timeout=30, max_retries=0)
     reply = response.choices[0].message.content
     order = RankOrder.model_validate_json(reply).order
+
     logger.info(f"Rerank: zakończono w {time.time()-start:.2f}s, order={order}")
     # Zabezpieczenie przed pustą listą lub błędnymi indeksami
     if not order or not chunks:
@@ -88,19 +92,6 @@ Odpowiadaj tylko za pomocą listy uszeregowanych identyfikatorów fragmentów i 
         if 1 <= i <= len(chunks):
             valid_chunks.append(chunks[i - 1])
     return valid_chunks if valid_chunks else chunks
-
-
-def make_rag_messages(question, history, chunks):
-    context = "\n\n".join(
-        f"Extract from {chunk.metadata['source']}:\n{chunk.page_content}" for chunk in chunks
-    )
-    system_prompt = SYSTEM_PROMPT.format(context=context)
-    return (
-        [{"role": "system", "content": system_prompt}]
-        + history
-        + [{"role": "user", "content": question}]
-    )
-
 
 @retry(wait=wait, stop=stop, reraise=True)
 def rewrite_query(question, history=[]):
@@ -162,6 +153,16 @@ def fetch_context(original_question):
     logger.info(f"Fetch context: zakończono w {time.time()-start:.2f}s")
     return reranked[:FINAL_K]
 
+def make_rag_messages(question, history, chunks):
+    context = "\n\n".join(
+        f"Extract from {chunk.metadata['source']}:\n{chunk.page_content}" for chunk in chunks
+    )
+    system_prompt = SYSTEM_PROMPT.format(context=context)
+    return (
+        [{"role": "system", "content": system_prompt}]
+        + history
+        + [{"role": "user", "content": question}]
+    )
 
 @retry(wait=wait, stop=stop, reraise=True)
 def answer_question(question: str, history: list[dict] = []) -> tuple[str, list]:

@@ -96,10 +96,6 @@ def process_document(document):
 
 
 def create_chunks(documents):
-    """
-    Twórz fragmenty, używając wielu procesów roboczych równolegle.
-    Jeśli pojawi się błąd limitu szybkości, ustaw parametr WORKERS na 1.
-    """
     chunks = []
     with Pool(processes=WORKERS) as pool:
         for result in tqdm(pool.imap_unordered(process_document, documents), total=len(documents)):
@@ -113,6 +109,7 @@ def create_embeddings(chunks):
         chroma.delete_collection(collection_name)
 
     texts = [chunk.page_content for chunk in chunks]
+    
     emb = openai.embeddings.create(model=embedding_model, input=texts).data
     vectors = [e.embedding for e in emb]
 
