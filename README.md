@@ -1,3 +1,13 @@
+---
+title: RAG Chatbot NeoGadżet
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 🤖 RAG Chatbot - NeoGadżet
 
 Inteligentny chatbot oparty na architekturze RAG (Retrieval-Augmented Generation) dla sklepu z elektroniką NeoGadżet. Aplikacja umożliwia użytkownikom zadawanie pytań dotyczących produktów, zwrotów, dostawy i innych aspektów oferty sklepu.

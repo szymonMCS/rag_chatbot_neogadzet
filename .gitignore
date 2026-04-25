@@ -12,7 +12,7 @@ venv/
 .env
 .env.local
 
-# Bazy wektorowe (generowane automatycznie)
+# Bazy wektorowe
 vector_db/
 preprocessed_db/
 *.db
