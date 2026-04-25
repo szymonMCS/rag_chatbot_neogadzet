@@ -16,6 +16,8 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          git config user.email "szymon.maciejewski.programista@gmail.com"
+          git config user.name "szymonMCS"
           git checkout --orphan hf-deploy
           git add -A
           git commit -m "Deploy to HF Spaces"
